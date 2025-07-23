@@ -215,8 +215,8 @@ export default function RegisterFormContent({ onSuccess, onCancel, initialRole }
               {isLoadingNisnLookup && <p className="text-sm text-gray-500 mt-1">Mencari siswa...</p>}
               {nisnStudentInfo && (
                 <div className="mt-2 p-2 bg-blue-50 border border-blue-200 rounded-lg text-blue-700 text-sm">
-                  <p><span className="font-semibold">{nisnStudentInfo.name}</span></p>
-                  <p><span className="font-semibold">{nisnStudentInfo.class}</span></p>
+                  <p>Nama Siswa: <span className="font-semibold">{nisnStudentInfo.name}</span></p>
+                  <p>Kelas: <span className="font-semibold">{nisnStudentInfo.class}</span></p>
                 </div>
               )}
               {nisnError && (
