@@ -97,15 +97,24 @@ export default function UserManagement() {
 
   const handleConfirmDelete = async () => {
     if (userToDelete) {
-      const { error } = await supabase.from('profiles').delete().eq('id', userToDelete.id);
-      if (error) {
-        console.error("Error deleting user:", error);
-        showError("Gagal menghapus pengguna.");
-      } else {
-        showSuccess("Pengguna berhasil dihapus.");
-        fetchUsers(); // Re-fetch to update UI
+      try {
+        const { error } = await supabase.functions.invoke('delete-user', {
+          body: { userId: userToDelete.id },
+        });
+
+        if (error) {
+          console.error("Error calling delete-user function:", error);
+          showError(`Gagal menghapus pengguna: ${error.message}`);
+        } else {
+          showSuccess("Pengguna berhasil dihapus.");
+          fetchUsers(); // Re-fetch to update UI
+        }
+      } catch (err: any) {
+        console.error("Unexpected error deleting user:", err);
+        showError("Terjadi kesalahan tak terduga saat menghapus pengguna.");
+      } finally {
+        setUserToDelete(null); // Clear the state after deletion attempt
       }
-      setUserToDelete(null); // Clear the state after deletion
     }
   };
 

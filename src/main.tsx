@@ -6,9 +6,13 @@ import ToastProvider from './components/ToastProvider.tsx'; // Import ToastProvi
 
 console.log("main.tsx is executing!"); // Added for debugging
 
+import { ThemeProvider } from './contexts/ThemeContext';
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ToastProvider /> {/* Add ToastProvider here */}
-    <App />
+    <ThemeProvider>
+      <ToastProvider /> {/* Add ToastProvider here */}
+      <App />
+    </ThemeProvider>
   </StrictMode>
 );
