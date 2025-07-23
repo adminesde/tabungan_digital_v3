@@ -125,7 +125,7 @@ export default function RegisterFormContent({ onSuccess, onCancel, initialRole }
   };
 
   return (
-    <div className="p-6">
+    <div className="p-6 flex flex-col h-full">
       <h2 className="text-xl font-bold text-gray-900 mb-4">Daftar Akun Baru</h2>
       <Button
         type="button"
@@ -137,7 +137,7 @@ export default function RegisterFormContent({ onSuccess, onCancel, initialRole }
         <span>Kembali ke Login</span>
       </Button>
 
-      <form onSubmit={handleSubmit} className="space-y-2">
+      <form onSubmit={handleSubmit} className="space-y-2 overflow-y-auto flex-grow">
         {error && (
           <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
             {error}
