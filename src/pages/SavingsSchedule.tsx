@@ -201,7 +201,7 @@ export default function SavingsSchedule() {
               variant="accent-blue"
             >
               <Plus className="w-4 h-4" />
-              <span>Tambah Tujuan</span>
+              <span className="hidden sm:inline">Tambah Tujuan</span>
             </Button>
           )}
         </div>
