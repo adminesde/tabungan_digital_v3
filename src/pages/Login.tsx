@@ -65,30 +65,29 @@ export default function Login() { // Renamed component to Login
   };
 
   const mainBoxClasses = `
-    relative z-10 bg-white rounded-2xl shadow-2xl flex flex-col lg:flex-row w-full overflow-hidden
+    relative z-10 bg-card rounded-2xl shadow-2xl flex flex-col lg:flex-row w-full overflow-y-auto
+    max-h-[95vh]
     transition-all duration-500 ease-in-out
     ${loginType === 'initial' ? 'max-w-sm sm:max-w-md lg:max-w-3xl' : 'max-w-sm sm:max-w-md md:max-w-lg lg:max-w-4xl'}
-    ${loginType === 'initial' ? 'h-[400px] lg:h-[450px]' : 'h-[600px] lg:h-[700px]'}
+    ${loginType === 'initial' ? 'h-[450px] lg:h-[500px]' : 'h-auto'}
   `;
 
   const leftSectionBackground = loginType === 'parent' 
     ? 'bg-gradient-to-br from-emerald-600 to-emerald-800' // Green gradient for parent
     : 'bg-gradient-to-br from-blue-600 to-blue-800'; // Blue gradient for others
 
-  const screenBackgroundClasses = loginType === 'parent'
-    ? 'bg-gradient-to-br from-emerald-500 to-emerald-700' // Green gradient for entire screen
-    : 'bg-gradient-to-br from-blue-600 to-blue-800'; // Blue gradient for entire screen
+  const screenBackgroundClasses = 'bg-background';
 
   return (
-    <div className={`min-h-screen ${screenBackgroundClasses} flex items-center justify-center p-4 relative overflow-hidden`}>
+    <div className={`h-screen ${screenBackgroundClasses} flex items-center justify-center p-4 relative overflow-y-auto`}>
       {/* Background circles */}
-      <div className="absolute w-96 h-96 bg-blue-500 rounded-full -top-24 -left-24 opacity-20"></div>
-      <div className="absolute w-72 h-72 bg-blue-500 rounded-full -bottom-16 -right-16 opacity-20"></div>
-      <div className="absolute w-48 h-48 bg-blue-500 rounded-full top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 opacity-20"></div>
+      <div className="absolute w-96 h-96 bg-blue-500 rounded-full -top-24 -left-24 opacity-20 dark:opacity-10"></div>
+      <div className="absolute w-72 h-72 bg-blue-500 rounded-full -bottom-16 -right-16 opacity-20 dark:opacity-10"></div>
+      <div className="absolute w-48 h-48 bg-blue-500 rounded-full top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 opacity-20 dark:opacity-10"></div>
 
       <div className={mainBoxClasses}>
         {/* Left Section - Welcome */}
-        <div className={`${leftSectionBackground} text-white p-8 lg:p-12 flex flex-col items-center justify-center text-center relative overflow-hidden lg:w-1/2`}>
+        <div className={`${leftSectionBackground} text-white p-8 lg:p-12 flex flex-col items-center justify-center text-center relative overflow-hidden lg:w-1/2 lg:min-h-full`}>
           <div className="w-24 h-24 bg-blue-500 rounded-full absolute -top-10 -right-10 opacity-30"></div>
           <div className="w-16 h-16 bg-blue-500 rounded-full absolute bottom-5 left-5 opacity-30"></div>
           
@@ -115,7 +114,7 @@ export default function Login() { // Renamed component to Login
         </div>
 
         {/* Right Section - Login Form Container */}
-        <div className="p-8 lg:p-12 relative lg:w-1/2 flex flex-col">
+        <div className="p-8 lg:p-12 relative lg:w-1/2 flex flex-col text-foreground">
           {loginType !== 'initial' && (
             <Button
               variant="ghost"
@@ -130,8 +129,8 @@ export default function Login() { // Renamed component to Login
           {/* Initial Login Type Selection */}
           <div className={`flex-1 flex flex-col items-center justify-center transition-opacity duration-500 ease-in-out
             ${loginType === 'initial' ? 'opacity-100 z-10' : 'opacity-0 pointer-events-none absolute inset-0'}`}>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Pilih Jenis Login</h1>
-            <p className="text-gray-600 mb-8 text-center">Silakan pilih jenis login Anda.</p>
+            <h1 className="text-3xl font-bold text-foreground mb-2">Pilih Jenis Login</h1>
+            <p className="text-muted-foreground mb-8 text-center">Silakan pilih jenis login Anda.</p>
             <Button
               type="button"
               onClick={() => setLoginType('adminTeacher')}
@@ -157,20 +156,20 @@ export default function Login() { // Renamed component to Login
             ${loginType === 'adminTeacher' ? 'opacity-100 z-10' : 'opacity-0 pointer-events-none absolute inset-0'}`}>
             {!isRegistering ? (
               <>
-                <h1 className="text-3xl font-bold text-gray-900 mb-4">Masuk</h1>
+                <h1 className="text-3xl font-bold text-foreground mb-4">Masuk</h1>
 
                 <form onSubmit={handleSubmit} className="space-y-2 flex-1 flex flex-col justify-center">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-muted-foreground mb-1">
                       Email
                     </label>
                     <div className="relative">
-                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
                       <input
                         type="email"
                         value={adminTeacherFormData.email}
                         onChange={(e) => setAdminTeacherFormData({ ...adminTeacherFormData, email: e.target.value })}
-                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent-blue focus:border-transparent"
+                        className="w-full pl-10 pr-4 py-3 bg-input border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                         placeholder="Masukkan email"
                         required
                       />
@@ -178,23 +177,23 @@ export default function Login() { // Renamed component to Login
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-muted-foreground mb-1">
                       Password
                     </label>
                     <div className="relative">
-                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
                       <input
                         type={showAdminTeacherPassword ? 'text' : 'password'} // Toggle type
                         value={adminTeacherFormData.password}
                         onChange={(e) => setAdminTeacherFormData({ ...adminTeacherFormData, password: e.target.value })}
-                        className="w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent-blue focus:border-transparent"
+                        className="w-full pl-10 pr-10 py-3 bg-input border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                         placeholder="Masukkan password"
                         required
                       />
                       <button
                         type="button"
                         onClick={() => setShowAdminTeacherPassword(!showAdminTeacherPassword)}
-                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground"
                       >
                         {showAdminTeacherPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                       </button>
@@ -202,8 +201,8 @@ export default function Login() { // Renamed component to Login
                   </div>
 
                   {error && (
-                    <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-                      <p className="text-sm text-red-600">{error}</p>
+                    <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
+                      <p className="text-sm text-destructive">{error}</p>
                     </div>
                   )}
 
@@ -222,8 +221,8 @@ export default function Login() { // Renamed component to Login
                       </>
                     )}
                   </Button>
-                  <div className="mt-6 pt-6 border-t border-gray-200 text-center">
-                    <p className="text-sm text-gray-600 mb-3">
+                  <div className="mt-6 pt-6 border-t border-border text-center">
+                    <p className="text-sm text-muted-foreground mb-3">
                       Belum punya akun?{' '}
                       <Button 
                         type="button" 
@@ -234,7 +233,7 @@ export default function Login() { // Renamed component to Login
                         Daftar Sekarang
                       </Button>
                     </p>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-muted-foreground">
                       Lupa password?{' '}
                       <Button 
                         type="button" 
@@ -262,73 +261,56 @@ export default function Login() { // Renamed component to Login
             ${loginType === 'parent' ? 'opacity-100 z-10' : 'opacity-0 pointer-events-none absolute inset-0'}`}>
             {!isRegistering ? (
               <>
-                <h1 className="text-3xl font-bold text-gray-900 mb-4">Masuk</h1>
+                <h1 className="text-3xl font-bold text-foreground mb-4">Masuk</h1>
 
                 <form onSubmit={handleSubmit} className="space-y-2 flex-1 flex flex-col justify-center">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-muted-foreground mb-1">
                       NISN Anak
                     </label>
                     <div className="relative">
-                      <Hash className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                      <Hash className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
                       <input
                         type="text"
                         value={nisn}
                         onChange={handleParentNisnChange}
-                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent-blue focus:border-transparent"
+                        className="w-full pl-10 pr-4 py-3 bg-input border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                         placeholder="Masukkan NISN anak"
                         maxLength={10}
                         required
                       />
                     </div>
                     {nisnStudentInfo && (
-                      <div className="mt-2 p-2 bg-blue-50 border border-blue-200 rounded-lg text-blue-700 text-sm">
-                        <p>Nama Siswa: <span className="font-semibold">{nisnStudentInfo.name}</span></p>
-                        <p>Kelas: <span className="font-semibold">{nisnStudentInfo.class}</span></p>
+                      <div className="mt-2 p-2 bg-primary/10 border border-primary/20 rounded-lg text-primary text-sm">
+                        <p><span className="font-semibold">{nisnStudentInfo.name}</span></p>
+                        <p><span className="font-semibold">{nisnStudentInfo.class}</span></p>
                       </div>
                     )}
                     {nisnError && (
-                      <div className="mt-2 p-2 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+                      <div className="mt-2 p-2 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive text-sm">
                         <p>{nisnError}</p>
                       </div>
                     )}
                   </div>
 
-                  {nisnStudentInfo && (
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Nama Anak
-                      </label>
-                      <div className="relative">
-                        <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                        <input
-                          type="text"
-                          value={nisnStudentInfo.name}
-                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg bg-gray-50"
-                          disabled
-                        />
-                      </div>
-                    </div>
-                  )}
-
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-muted-foreground mb-1">
                       Password
                     </label>
                     <div className="relative">
-                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
                       <input
                         type={showParentPassword ? 'text' : 'password'} // Toggle type
                         value={parentFormData.password}
                         onChange={(e) => setParentFormData({ ...parentFormData, password: e.target.value })}
-                        className="w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent-blue focus:border-transparent"
+                        className="w-full pl-10 pr-10 py-3 bg-input border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                         placeholder="Masukkan password"
                         required
                       />
                       <button
                         type="button"
                         onClick={() => setShowParentPassword(!showParentPassword)}
-                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground"
                       >
                         {showParentPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                       </button>
@@ -336,8 +318,8 @@ export default function Login() { // Renamed component to Login
                   </div>
 
                   {error && (
-                    <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-                      <p className="text-sm text-red-600">{error}</p>
+                    <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
+                      <p className="text-sm text-destructive">{error}</p>
                     </div>
                   )}
 
@@ -356,8 +338,8 @@ export default function Login() { // Renamed component to Login
                       </>
                     )}
                   </Button>
-                  <div className="mt-6 pt-6 border-t border-gray-200 text-center">
-                    <p className="text-sm text-gray-600 mb-3">
+                  <div className="mt-6 pt-6 border-t border-border text-center">
+                    <p className="text-sm text-muted-foreground mb-3">
                       Belum punya akun?{' '}
                       <Button 
                         type="button" 
@@ -368,7 +350,7 @@ export default function Login() { // Renamed component to Login
                         Daftar Sekarang
                       </Button>
                     </p>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-muted-foreground">
                       Lupa password?{' '}
                       <Button 
                         type="button" 
@@ -393,7 +375,7 @@ export default function Login() { // Renamed component to Login
         </div>
       </div>
 
-      <div className="absolute bottom-4 text-xs text-gray-300 opacity-80 text-center w-full">
+      <div className="absolute bottom-4 text-xs text-muted-foreground/80 text-center w-full">
         SIBUDIS - SD Negeri Dukuhwaru 01
       </div>
 
