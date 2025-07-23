@@ -1,0 +1,4 @@
+CREATE POLICY "Allow authenticated users to upload avatars" ON storage.objects FOR INSERT WITH CHECK (bucket_id = 'avatars' AND auth.role() = 'authenticated');
+CREATE POLICY "Allow authenticated users to view avatars" ON storage.objects FOR SELECT USING (bucket_id = 'avatars' AND auth.role() = 'authenticated');
+CREATE POLICY "Allow authenticated users to update their own avatars" ON storage.objects FOR UPDATE USING (bucket_id = 'avatars' AND auth.uid() = owner);
+CREATE POLICY "Allow authenticated users to delete their own avatars" ON storage.objects FOR DELETE USING (bucket_id = 'avatars' AND auth.uid() = owner);

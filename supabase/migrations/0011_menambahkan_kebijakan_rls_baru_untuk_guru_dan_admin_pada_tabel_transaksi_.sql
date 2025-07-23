@@ -1,0 +1,2 @@
+CREATE POLICY "Teachers can view their class transactions." ON public.transactions FOR SELECT USING (student_id IN (SELECT id FROM public.students WHERE class = (SELECT class FROM public.profiles WHERE id = auth.uid())));
+CREATE POLICY "Admins can view all transactions." ON public.transactions FOR SELECT USING ((SELECT role FROM public.profiles WHERE id = auth.uid()) = 'admin');

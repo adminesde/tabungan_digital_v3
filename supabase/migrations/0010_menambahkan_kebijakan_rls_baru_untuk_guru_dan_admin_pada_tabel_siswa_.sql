@@ -1,0 +1,2 @@
+CREATE POLICY "Teachers can view their class students." ON public.students FOR SELECT USING (class = (SELECT class FROM public.profiles WHERE id = auth.uid()));
+CREATE POLICY "Admins can view all students." ON public.students FOR SELECT USING ((SELECT role FROM public.profiles WHERE id = auth.uid()) = 'admin');

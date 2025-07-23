@@ -1,0 +1,1 @@
+DELETE FROM public.savings_goals WHERE type = 'class';

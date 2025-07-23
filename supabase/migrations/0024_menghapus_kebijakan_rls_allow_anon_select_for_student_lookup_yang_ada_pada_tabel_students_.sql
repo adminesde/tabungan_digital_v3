@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "Allow anon select for student lookup" ON public.students;

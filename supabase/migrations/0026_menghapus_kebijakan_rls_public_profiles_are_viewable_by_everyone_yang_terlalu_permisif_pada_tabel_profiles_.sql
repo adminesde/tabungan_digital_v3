@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "Public profiles are viewable by everyone." ON public.profiles;
