@@ -1,38 +1,37 @@
-import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom'; // Import ReactDOM
-import { useAuth } from '../../contexts/Auth/AuthContext'; 
-import { X, User, Mail, Lock, Camera, Save, AlertCircle, Trash2, Hash } from 'lucide-react'; // Import Trash2 and Hash
+import { useState, useEffect } from 'react';
+import ReactDOM from 'react-dom';
+import { useAuth } from '../../contexts/Auth/AuthContext';
+import { X, User, Lock, Save, AlertCircle, Hash, Eye, EyeOff } from 'lucide-react';
 import { showSuccess, showError } from '../../utils/toast';
-import { supabase } from '../../integrations/supabase/client'; 
-import { Button } from '../ui/button'; // Import Button component
+import { supabase } from '../../integrations/supabase/client';
+import { Button } from '../ui/button';
 
 interface ProfileModalProps {
   onClose: () => void;
-  initialTab?: 'profile' | 'password'; // Removed 'delete' from initialTab
+  initialTab?: 'profile' | 'password';
 }
 
 export default function ProfileModal({ onClose, initialTab = 'profile' }: ProfileModalProps) {
-  const { user, updateUser } = useAuth(); // Removed deleteAccount and resetPassword
-  const [activeTab, setActiveTab] = useState<'profile' | 'password'>(initialTab); // Removed 'delete' tab
+  const { user, updateUser } = useAuth();
+  const [activeTab, setActiveTab] = useState<'profile' | 'password'>(initialTab);
   const [formData, setFormData] = useState({
     name: user?.name || '',
     email: user?.email || '',
-    // avatarUrl: user?.avatarUrl || '', // Removed avatarUrl from form data
-    nip: user?.nip || '', // Add NIP to form data
+    nip: user?.nip || '',
   });
-  const [passwordFormData, setPasswordFormData] = useState({ // New state for password form
+  const [passwordFormData, setPasswordFormData] = useState({
     newPassword: '',
     confirmNewPassword: '',
   });
   const [passwordMessage, setPasswordMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
   const [profileMessage, setProfileMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
-  // const [isUploading, setIsUploading] = useState(false); // Removed isUploading
   const [isResettingPassword, setIsResettingPassword] = useState(false);
-  // const [isDeletingAccount, setIsDeletingAccount] = useState(false); // Removed isDeletingAccount
-  const [isSubmittingProfile, setIsSubmittingProfile] = useState(false); // New state for profile form submission
+  const [isSubmittingProfile, setIsSubmittingProfile] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false);
 
   useEffect(() => {
-    setActiveTab(initialTab); // Update tab if initialTab changes
+    setActiveTab(initialTab);
   }, [initialTab]);
 
   useEffect(() => {
@@ -40,7 +39,6 @@ export default function ProfileModal({ onClose, initialTab = 'profile' }: Profil
       setFormData({
         name: user.name,
         email: user.email,
-        // avatarUrl: user.avatarUrl || '', // Removed avatarUrl from form data
         nip: user.nip || '',
       });
     }
@@ -51,24 +49,22 @@ export default function ProfileModal({ onClose, initialTab = 'profile' }: Profil
   const handleProfileSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setProfileMessage(null);
-    setIsSubmittingProfile(true); // Set loading state
+    setIsSubmittingProfile(true);
 
-    const success = await updateUser({ 
-      name: formData.name, 
-      email: formData.email, 
-      // avatarUrl: formData.avatarUrl, // Removed avatarUrl from update
-      nip: formData.nip, // Pass NIP
+    const success = await updateUser({
+      name: formData.name,
+      email: formData.email,
+      nip: formData.nip,
     });
 
     if (success) {
       setProfileMessage({ type: 'success', text: 'Profil berhasil diperbarui!' });
       showSuccess('Profil berhasil diperbarui!');
-      // onClose(); // Keep modal open to show success message
     } else {
       setProfileMessage({ type: 'error', text: 'Gagal memperbarui profil.' });
       showError('Gagal memperbarui profil.');
     }
-    setIsSubmittingProfile(false); // Reset loading state
+    setIsSubmittingProfile(false);
   };
 
   const handlePasswordSubmit = async (e: React.FormEvent) => {
@@ -99,7 +95,7 @@ export default function ProfileModal({ onClose, initialTab = 'profile' }: Profil
       } else if (data && data.message) {
         setPasswordMessage({ type: 'success', text: 'Password Anda berhasil diperbarui!' });
         showSuccess('Password berhasil diperbarui!');
-        setPasswordFormData({ newPassword: '', confirmNewPassword: '' }); // Clear fields
+        setPasswordFormData({ newPassword: '', confirmNewPassword: '' });
       } else {
         setPasswordMessage({ type: 'error', text: 'Gagal mereset password. Respon tidak valid.' });
         showError('Gagal mereset password.');
@@ -112,10 +108,6 @@ export default function ProfileModal({ onClose, initialTab = 'profile' }: Profil
       setIsResettingPassword(false);
     }
   };
-
-  // Removed handleDeleteAccount function
-
-  // Removed handleAvatarUpload function
 
   const getRoleLabel = (role: string) => {
     switch (role) {
@@ -141,10 +133,9 @@ export default function ProfileModal({ onClose, initialTab = 'profile' }: Profil
         </div>
 
         <div className="p-6">
-          {/* Profile Photo Section */}
           <div className="flex flex-col items-center mb-6">
             <div className="relative">
-              {user.avatarUrl ? ( // Still display if avatarUrl exists, but no upload option
+              {user.avatarUrl ? (
                 <img 
                   src={user.avatarUrl} 
                   alt="Avatar" 
@@ -157,19 +148,16 @@ export default function ProfileModal({ onClose, initialTab = 'profile' }: Profil
                   </span>
                 </div>
               )}
-              {/* Removed label for avatar-upload input */}
             </div>
-            {/* Removed text about clicking camera icon */}
           </div>
 
-          {/* Tabs */}
           <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-1 mb-6 bg-gray-100 rounded-lg p-1">
             <Button
-              variant="ghost" // Use ghost variant
+              variant="ghost"
               onClick={() => { setActiveTab('profile'); setProfileMessage(null); }}
               className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
                 activeTab === 'profile'
-                  ? 'bg-theme-content-bg text-accent-blue shadow-sm' // Active style
+                  ? 'bg-theme-content-bg text-accent-blue shadow-sm'
                   : 'text-gray-600 hover:text-gray-900'
               }`}
             >
@@ -177,21 +165,19 @@ export default function ProfileModal({ onClose, initialTab = 'profile' }: Profil
               Profil
             </Button>
             <Button
-              variant="ghost" // Use ghost variant
+              variant="ghost"
               onClick={() => { setActiveTab('password'); setPasswordMessage(null); }}
               className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
                 activeTab === 'password'
-                  ? 'bg-theme-content-bg text-accent-blue shadow-sm' // Active style
+                  ? 'bg-theme-content-bg text-accent-blue shadow-sm'
                   : 'text-gray-600 hover:text-gray-900'
               }`}
             >
               <Lock className="w-4 h-4 inline mr-2" />
               Password
             </Button>
-            {/* Removed Hapus Akun tab */}
           </div>
 
-          {/* Profile Form */}
           {activeTab === 'profile' && (
             <form onSubmit={handleProfileSubmit} className="space-y-4">
               {profileMessage && (
@@ -228,7 +214,7 @@ export default function ProfileModal({ onClose, initialTab = 'profile' }: Profil
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent-blue focus:border-transparent"
                       required
-                      disabled // Email is disabled for direct edit
+                      disabled
                     />
                   </div>
                   {user.studentInfo && (
@@ -285,7 +271,7 @@ export default function ProfileModal({ onClose, initialTab = 'profile' }: Profil
                       placeholder="Masukkan alamat email"
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent-blue focus:border-transparent"
                       required
-                      disabled // Email is disabled for direct edit
+                      disabled
                     />
                   </div>
 
@@ -314,7 +300,7 @@ export default function ProfileModal({ onClose, initialTab = 'profile' }: Profil
                         type="text"
                         value={user.class ? `Kelas ${user.class}` : ''}
                         className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50"
-                        disabled 
+                        disabled
                       />
                     </div>
                   )}
@@ -337,7 +323,7 @@ export default function ProfileModal({ onClose, initialTab = 'profile' }: Profil
                 type="submit"
                 className="w-full flex items-center justify-center space-x-2"
                 variant="accent-blue"
-                disabled={isSubmittingProfile} // Disable button during submission
+                disabled={isSubmittingProfile}
               >
                 {isSubmittingProfile ? (
                   <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -351,7 +337,6 @@ export default function ProfileModal({ onClose, initialTab = 'profile' }: Profil
             </form>
           )}
 
-          {/* Password Form */}
           {activeTab === 'password' && (
             <form onSubmit={handlePasswordSubmit} className="space-y-4">
               {passwordMessage && (
@@ -371,7 +356,7 @@ export default function ProfileModal({ onClose, initialTab = 'profile' }: Profil
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                   <input
-                    type={showNewPassword ? 'text' : 'password'} // Toggle type
+                    type={showNewPassword ? 'text' : 'password'}
                     value={passwordFormData.newPassword}
                     onChange={(e) => setPasswordFormData({ ...passwordFormData, newPassword: e.target.value })}
                     className="w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent-blue focus:border-transparent"
@@ -396,7 +381,7 @@ export default function ProfileModal({ onClose, initialTab = 'profile' }: Profil
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                   <input
-                    type={showConfirmNewPassword ? 'text' : 'password'} // Toggle type
+                    type={showConfirmNewPassword ? 'text' : 'password'}
                     value={passwordFormData.confirmNewPassword}
                     onChange={(e) => setPasswordFormData({ ...passwordFormData, confirmNewPassword: e.target.value })}
                     className="w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent-blue focus:border-transparent"
@@ -431,8 +416,6 @@ export default function ProfileModal({ onClose, initialTab = 'profile' }: Profil
               </Button>
             </form>
           )}
-
-          {/* Removed Delete Account Section */}
         </div>
       </div>
     </div>
