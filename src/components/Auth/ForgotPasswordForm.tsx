@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'; // Import ReactDOM
 import { X, Mail, Send } from 'lucide-react';
 import { showSuccess, showError } from '../../utils/toast';
 import { useAuth } from '../../contexts/Auth/AuthContext'; 
-import { Button } from '../ui/button'; // Import Button component
+import { Button } from '../ui/button'; // Corrected import path
 
 interface ForgotPasswordFormProps {
   onClose: () => void;
