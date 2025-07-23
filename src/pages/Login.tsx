@@ -65,10 +65,11 @@ export default function Login() { // Renamed component to Login
   };
 
   const mainBoxClasses = `
-    relative z-10 bg-white rounded-2xl shadow-2xl flex flex-col lg:flex-row w-full overflow-hidden
+    relative z-10 bg-white rounded-2xl shadow-2xl flex flex-col lg:flex-row w-full overflow-y-auto
+    max-h-[95vh]
     transition-all duration-500 ease-in-out
     ${loginType === 'initial' ? 'max-w-sm sm:max-w-md lg:max-w-3xl' : 'max-w-sm sm:max-w-md md:max-w-lg lg:max-w-4xl'}
-    ${loginType === 'initial' ? 'h-[400px] lg:h-[450px]' : 'h-[600px] lg:h-[700px]'}
+    ${loginType === 'initial' ? 'h-[450px] lg:h-[500px]' : 'h-auto'}
   `;
 
   const leftSectionBackground = loginType === 'parent' 
@@ -80,7 +81,7 @@ export default function Login() { // Renamed component to Login
     : 'bg-gradient-to-br from-blue-600 to-blue-800'; // Blue gradient for entire screen
 
   return (
-    <div className={`min-h-screen ${screenBackgroundClasses} flex items-center justify-center p-4 relative overflow-hidden`}>
+    <div className={`h-screen ${screenBackgroundClasses} flex items-center justify-center p-4 relative overflow-y-auto`}>
       {/* Background circles */}
       <div className="absolute w-96 h-96 bg-blue-500 rounded-full -top-24 -left-24 opacity-20"></div>
       <div className="absolute w-72 h-72 bg-blue-500 rounded-full -bottom-16 -right-16 opacity-20"></div>
@@ -88,7 +89,7 @@ export default function Login() { // Renamed component to Login
 
       <div className={mainBoxClasses}>
         {/* Left Section - Welcome */}
-        <div className={`${leftSectionBackground} text-white p-8 lg:p-12 flex flex-col items-center justify-center text-center relative overflow-hidden lg:w-1/2`}>
+        <div className={`${leftSectionBackground} text-white p-8 lg:p-12 flex flex-col items-center justify-center text-center relative overflow-hidden lg:w-1/2 lg:min-h-full`}>
           <div className="w-24 h-24 bg-blue-500 rounded-full absolute -top-10 -right-10 opacity-30"></div>
           <div className="w-16 h-16 bg-blue-500 rounded-full absolute bottom-5 left-5 opacity-30"></div>
           
@@ -293,23 +294,6 @@ export default function Login() { // Renamed component to Login
                       </div>
                     )}
                   </div>
-
-                  {nisnStudentInfo && (
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Nama Anak
-                      </label>
-                      <div className="relative">
-                        <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                        <input
-                          type="text"
-                          value={nisnStudentInfo.name}
-                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg bg-gray-50"
-                          disabled
-                        />
-                      </div>
-                    </div>
-                  )}
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
