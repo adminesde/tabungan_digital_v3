@@ -75,6 +75,11 @@ export function StudentsProvider({ children }: { children: ReactNode }) {
   }, [fetchStudents, user, isAuthLoading]); // Add fetchStudents to dependency array
 
   const addStudent = async (newStudentData: Omit<Student, 'id' | 'createdAt'>): Promise<boolean> => {
+    if (!user) {
+      showError("Anda harus login untuk menambahkan siswa.");
+      return false;
+    }
+
     const { error } = await supabase
       .from('students')
       .insert({
@@ -83,6 +88,7 @@ export function StudentsProvider({ children }: { children: ReactNode }) {
         student_id: newStudentData.studentId,
         parent_id: newStudentData.parentId,
         balance: newStudentData.balance,
+        teacher_id: user.id, // Associate student with the currently logged-in teacher
       });
 
     if (error) {
