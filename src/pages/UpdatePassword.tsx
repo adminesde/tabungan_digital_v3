@@ -57,8 +57,12 @@ export default function UpdatePassword() {
       } else if (data.user) {
         setMessage({ type: 'success', text: 'Password Anda berhasil diperbarui! Anda akan diarahkan ke halaman login.' });
         showSuccess('Password berhasil diperbarui!');
+        
+        // Explicitly sign out to clear the session completely
+        await supabase.auth.signOut();
+
         setTimeout(() => {
-          navigate('/login'); // Redirect to login page
+          navigate('/login', { replace: true }); // Redirect to login page
         }, 3000);
       }
     } catch (err) {
