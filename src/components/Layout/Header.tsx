@@ -45,8 +45,6 @@ export default function Header({ title, onMenuClick, className }: HeaderProps) {
     setShowProfileDropdown(false); // Close dropdown when modal opens
   };
 
-  const isParent = user?.role === 'parent';
-
   return (
     <header className={`${className} px-6 py-4`}> {/* Apply dynamic className here */}
       <div className="flex items-center justify-between">
@@ -55,13 +53,13 @@ export default function Header({ title, onMenuClick, className }: HeaderProps) {
             variant="ghost"
             size="icon"
             onClick={onMenuClick}
-            className="lg:hidden text-muted-foreground hover:bg-muted hover:text-foreground"
+            className="lg:hidden text-gray-300 hover:bg-theme-light-bg hover:text-white"
           >
             <Menu className="w-5 h-5" />
           </Button>
           <div>
-            <h1 className="text-2xl font-bold text-foreground">{title}</h1>
-            <p className="text-sm text-muted-foreground capitalize">
+            <h1 className="text-2xl font-bold text-white">{title}</h1>
+            <p className="text-sm text-gray-300 capitalize">
               Selamat datang, <span className="hidden sm:inline">{user?.name}</span>
               <span className="inline sm:hidden">{user?.name.split(' ')[0]}</span> {/* Show first name on small screens */}
             </p>
@@ -69,12 +67,35 @@ export default function Header({ title, onMenuClick, className }: HeaderProps) {
         </div>
 
         <div className="flex items-center space-x-4">
+          {/* Search bar removed as per request */}
+
+          {/* Removed Notification Bell and Dropdown */}
+          {/* <div className="relative group">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setShowNotificationDropdown(!showNotificationDropdown)}
+              className="relative text-gray-300 hover:text-white hover:bg-theme-light-bg"
+            >
+              <Bell className="w-5 h-5" />
+              {unreadCount > 0 && (
+                <span className="absolute -top-1 -right-1 w-4 h-4 bg-accent-red rounded-full flex items-center justify-center text-xs text-white">
+                  {unreadCount}
+                </span>
+              )}
+              <span className="hidden lg:hidden group-hover:block absolute top-full mt-2 bg-gray-800 text-white text-xs px-2 py-1 rounded whitespace-nowrap">Notifikasi</span>
+            </Button>
+            {showNotificationDropdown && (
+              <NotificationList onClose={() => setShowNotificationDropdown(false)} />
+            )}
+          </div> */}
+
           <div className="relative group"> {/* Added group for hover effect */}
             <Button
               variant="ghost"
               size="icon"
               onClick={() => setShowProfileDropdown(!showProfileDropdown)}
-              className={`w-8 h-8 ${isParent ? 'bg-accent-green' : 'bg-primary'} rounded-full flex items-center justify-center hover:bg-primary/90 transition-colors p-0`} // p-0 to allow img to fill
+              className="w-8 h-8 bg-accent-blue rounded-full flex items-center justify-center hover:bg-accent-blue transition-colors p-0" // p-0 to allow img to fill
             >
               {user?.avatarUrl ? (
                 <img 
@@ -83,11 +104,11 @@ export default function Header({ title, onMenuClick, className }: HeaderProps) {
                   className="w-full h-full rounded-full object-cover" 
                 />
               ) : (
-                <span className="text-sm font-medium text-primary-foreground">
+                <span className="text-sm font-medium text-white">
                   {user?.name.charAt(0)}
                 </span>
               )}
-              <span className="hidden lg:hidden group-hover:block absolute top-full mt-2 bg-popover text-popover-foreground text-xs px-2 py-1 rounded whitespace-nowrap">Profil</span> {/* Hover text */}
+              <span className="hidden lg:hidden group-hover:block absolute top-full mt-2 bg-gray-800 text-white text-xs px-2 py-1 rounded whitespace-nowrap">Profil</span> {/* Hover text */}
             </Button>
             
             {showProfileDropdown && (

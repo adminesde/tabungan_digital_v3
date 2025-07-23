@@ -125,13 +125,13 @@ export default function RegisterFormContent({ onSuccess, onCancel, initialRole }
   };
 
   return (
-    <div className="p-6 flex flex-col h-full text-foreground">
-      <h2 className="text-xl font-bold text-foreground mb-4">Daftar Akun Baru</h2>
+    <div className="p-6 flex flex-col h-full">
+      <h2 className="text-xl font-bold text-gray-900 mb-4">Daftar Akun Baru</h2>
       <Button
         type="button"
         onClick={onCancel}
         variant="ghost"
-        className="flex items-center space-x-1 text-sm text-muted-foreground hover:text-foreground mb-4 p-0 h-auto"
+        className="flex items-center space-x-1 text-sm text-gray-600 hover:text-gray-900 mb-4 p-0 h-auto"
       >
         <ArrowLeft className="w-4 h-4" />
         <span>Kembali ke Login</span>
@@ -139,7 +139,7 @@ export default function RegisterFormContent({ onSuccess, onCancel, initialRole }
 
       <form onSubmit={handleSubmit} className="space-y-2 overflow-y-auto flex-grow">
         {error && (
-          <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive text-sm">
+          <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
             {error}
           </div>
         )}
@@ -147,7 +147,7 @@ export default function RegisterFormContent({ onSuccess, onCancel, initialRole }
         {selectedRole === 'teacher' && (
           <>
             <div>
-              <label className="block text-sm font-medium text-muted-foreground mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 <User className="w-4 h-4 inline mr-1" />
                 Nama Lengkap
               </label>
@@ -156,13 +156,13 @@ export default function RegisterFormContent({ onSuccess, onCancel, initialRole }
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 placeholder="Masukkan nama lengkap"
-                className="w-full px-3 py-2 bg-input border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent-blue focus:border-transparent"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-muted-foreground mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 <Mail className="w-4 h-4 inline mr-1" />
                 Email
               </label>
@@ -171,20 +171,20 @@ export default function RegisterFormContent({ onSuccess, onCancel, initialRole }
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 placeholder="Masukkan alamat email"
-                className="w-full px-3 py-2 bg-input border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent-blue focus:border-transparent"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-muted-foreground mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 <GraduationCap className="w-4 h-4 inline mr-1" />
                 Kelas yang Diajar
               </label>
               <select
                 value={formData.class}
                 onChange={(e) => setFormData({ ...formData, class: e.target.value })}
-                className="w-full px-3 py-2 bg-input border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent-blue focus:border-transparent"
                 required
               >
                 <option value="">Pilih Kelas</option>
@@ -199,7 +199,7 @@ export default function RegisterFormContent({ onSuccess, onCancel, initialRole }
         {selectedRole === 'parent' && (
           <>
             <div>
-              <label className="block text-sm font-medium text-muted-foreground mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 <Hash className="w-4 h-4 inline mr-1" />
                 NISN Anak
               </label>
@@ -208,26 +208,26 @@ export default function RegisterFormContent({ onSuccess, onCancel, initialRole }
                 value={nisn}
                 onChange={handleNisnInputChange}
                 placeholder="Masukkan NISN anak (10 digit)"
-                className="w-full px-3 py-2 bg-input border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent-blue focus:border-transparent"
                 maxLength={10}
                 required
               />
-              {isLoadingNisnLookup && <p className="text-sm text-muted-foreground mt-1">Mencari siswa...</p>}
+              {isLoadingNisnLookup && <p className="text-sm text-gray-500 mt-1">Mencari siswa...</p>}
               {nisnStudentInfo && (
-                <div className="mt-2 p-2 bg-primary/10 border border-primary/20 rounded-lg text-primary text-sm">
+                <div className="mt-2 p-2 bg-blue-50 border border-blue-200 rounded-lg text-blue-700 text-sm">
                   <p><span className="font-semibold">{nisnStudentInfo.name}</span></p>
                   <p><span className="font-semibold">{nisnStudentInfo.class}</span></p>
                 </div>
               )}
               {nisnError && (
-                <div className="mt-2 p-2 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive text-sm">
+                <div className="mt-2 p-2 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
                   <p>{nisnError}</p>
                 </div>
               )}
             </div>
             {nisnStudentInfo && (
               <div>
-                <label className="block text-sm font-medium text-muted-foreground mb-1">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
                   <User className="w-4 h-4 inline mr-1" />
                   Nama Lengkap Orang Tua
                 </label>
@@ -236,7 +236,7 @@ export default function RegisterFormContent({ onSuccess, onCancel, initialRole }
                   value={formData.parentName}
                   onChange={(e) => setFormData({ ...formData, parentName: e.target.value })}
                   placeholder="Masukkan nama lengkap Anda"
-                  className="w-full px-3 py-2 bg-input border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent-blue focus:border-transparent"
                   required
                 />
               </div>
@@ -245,7 +245,7 @@ export default function RegisterFormContent({ onSuccess, onCancel, initialRole }
         )}
 
         <div>
-          <label className="block text-sm font-medium text-muted-foreground mb-1">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
             <Lock className="w-4 h-4 inline mr-1" />
             Password
           </label>
@@ -255,13 +255,13 @@ export default function RegisterFormContent({ onSuccess, onCancel, initialRole }
               value={formData.password}
               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
               placeholder="Masukkan password"
-              className="w-full px-3 pr-10 py-2 bg-input border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+              className="w-full px-3 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent-blue focus:border-transparent"
               required
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground"
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
             >
               {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
             </button>
@@ -269,7 +269,7 @@ export default function RegisterFormContent({ onSuccess, onCancel, initialRole }
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-muted-foreground mb-1">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
             <Lock className="w-4 h-4 inline mr-1" />
             Konfirmasi Password
           </label>
@@ -279,13 +279,13 @@ export default function RegisterFormContent({ onSuccess, onCancel, initialRole }
               value={formData.confirmPassword}
               onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
               placeholder="Konfirmasi password"
-              className="w-full px-3 pr-10 py-2 bg-input border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+              className="w-full px-3 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent-blue focus:border-transparent"
               required
             />
             <button
               type="button"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground"
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
             >
               {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
             </button>

@@ -64,15 +64,24 @@ function AppContent() {
     }
   };
 
+  // Determine background classes based on user role
+  const isParent = user.role === 'parent';
+  const sidebarBgClass = isParent
+    ? 'bg-gradient-to-br from-emerald-600 to-emerald-800'
+    : 'bg-gradient-to-br from-blue-600 to-blue-800';
+  const headerBgClass = isParent
+    ? 'bg-gradient-to-br from-emerald-600 to-emerald-800'
+    : 'bg-gradient-to-br from-blue-600 to-blue-800';
+
   return (
-    <div className="h-screen flex bg-background">
+    <div className="h-screen flex">
       {/* Mobile sidebar overlay */}
       {sidebarOpen && (
         <div 
           className="fixed inset-0 z-40 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         >
-          <div className="absolute inset-0 bg-black/60"></div>
+          <div className="absolute inset-0 bg-black opacity-50"></div>
         </div>
       )}
 
@@ -83,19 +92,22 @@ function AppContent() {
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
         lg:static lg:inset-0 lg:w-64 lg:translate-x-0
         w-64
+        // Removed hardcoded gradient here, it will be passed to Sidebar component
       `}>
-        <Sidebar sidebarOpen={sidebarOpen} />
+        <Sidebar sidebarOpen={sidebarOpen} className={sidebarBgClass} />
       </div>
 
       {/* Main content */}
       <div className={`
         flex-1 flex flex-col overflow-y-auto
         transition-all duration-300 ease-in-out
+        lg:ml-[0.5cm]
+        bg-theme-content-bg
       `}>
         <Header 
           title={getPageTitle()}
           onMenuClick={() => setSidebarOpen(!sidebarOpen)}
-          className="bg-background/80 backdrop-blur-sm border-b border-border sticky top-0 z-30" // Make header sticky
+          className={headerBgClass} // Pass dynamic class to Header
         />
         <main className="flex-1">
           <div className="container mx-auto px-6 py-8">
@@ -116,7 +128,7 @@ function AppContent() {
           </div>
         </main>
         {/* Global Footer */}
-        <footer className="py-4 text-center text-xs text-muted-foreground border-t border-border bg-card">
+        <footer className="py-4 text-center text-xs text-gray-500 border-t border-gray-200 bg-white">
           SIBUDIS - Anang Creative Production
         </footer>
       </div>

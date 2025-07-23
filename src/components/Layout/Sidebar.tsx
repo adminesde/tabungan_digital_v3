@@ -9,11 +9,8 @@ import {
   GraduationCap,
   TrendingUp,
   UploadCloud,
-  Sun,
-  Moon,
 } from 'lucide-react';
 import { useAuth } from '../../contexts/Auth/AuthContext';
-import { useTheme } from '../../contexts/ThemeContext';
 import { Link, useLocation } from 'react-router-dom'; // Import Link and useLocation
 
 interface SidebarProps {
@@ -47,7 +44,6 @@ const menuItems = {
 
 export default function Sidebar({ sidebarOpen, className }: SidebarProps) { // Added sidebarOpen prop and className
   const { user, logout } = useAuth();
-  const { theme, toggleTheme } = useTheme();
   const location = useLocation(); // Get current location
 
   if (!user) return null;
@@ -70,21 +66,19 @@ export default function Sidebar({ sidebarOpen, className }: SidebarProps) { // A
     }
   };
 
-  const isParent = user?.role === 'parent';
-
   return (
-    <div className={`${className} bg-card text-card-foreground shadow-lg h-full flex flex-col`}> {/* Apply dynamic className here */}
-      <div className={`p-6 border-b border-border flex items-center justify-between`}>
+    <div className={`${className} shadow-lg h-full flex flex-col`}> {/* Apply dynamic className here */}
+      <div className={`p-6 border-b border-blue-500 flex items-center justify-between`}>
         <div className={`flex items-center space-x-3 ${sidebarOpen ? 'flex' : 'hidden lg:flex'}`}> {/* Conditionally hide on mobile when closed */}
-          <div className={`w-10 h-10 ${isParent ? 'bg-accent-green' : 'bg-primary'} rounded-full flex items-center justify-center`}>
-            <GraduationCap className="w-6 h-6 text-primary-foreground" />
+          <div className="w-10 h-10 bg-accent-blue rounded-full flex items-center justify-center">
+            <GraduationCap className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h2 className="text-lg font-bold text-foreground whitespace-nowrap">
+            <h2 className="text-lg font-bold text-white whitespace-nowrap">
               <span className="hidden sm:inline">Tabungan Digital</span>
               <span className="inline sm:hidden">SIBUDIS</span> {/* Shorter text for mobile */}
             </h2>
-            <p className="text-sm text-muted-foreground whitespace-nowrap">
+            <p className="text-sm text-gray-300 whitespace-nowrap">
               <span className="hidden sm:inline">SD Negeri Dukuhwaru 01</span>
               <span className="inline sm:hidden">SDN Dukuhwaru 01</span> {/* Shorter text for mobile */}
             </p>
@@ -103,7 +97,7 @@ export default function Sidebar({ sidebarOpen, className }: SidebarProps) { // A
                 to={item.path} // Use Link to navigate
                 className={`
                   w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors
-                  ${isActive ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-muted hover:text-foreground'}
+                  ${isActive ? 'bg-blue-500 text-white border-r-4 border-accent-blue' : 'text-gray-300 hover:bg-blue-500 hover:text-white'}
                   group
                 `}
               >
@@ -119,35 +113,22 @@ export default function Sidebar({ sidebarOpen, className }: SidebarProps) { // A
         </nav>
       </div>
 
-      <div className={`p-4 border-t border-border`}>
-        <div className="mb-4">
-          <button
-            onClick={toggleTheme}
-            className={`
-              w-full flex items-center space-x-3 px-4 py-2 text-muted-foreground hover:bg-muted hover:text-foreground rounded-lg transition-colors
-            `}
-          >
-            {theme === 'light' ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
-            <span className={`font-medium ${sidebarOpen ? 'block' : 'hidden lg:block'}`}>
-              {theme === 'light' ? 'Mode Gelap' : 'Mode Terang'}
-            </span>
-          </button>
-        </div>
+      <div className={`p-4 border-t border-blue-500`}>
         <div className={`flex items-center space-x-3 mb-4 ${sidebarOpen ? 'flex' : 'hidden lg:flex'}`}> {/* Conditionally hide on mobile when closed */}
-          <div className={`w-8 h-8 ${isParent ? 'bg-accent-green' : 'bg-primary'} rounded-full flex items-center justify-center`}>
-            <span className="text-sm font-medium text-primary-foreground">
+          <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+            <span className="text-sm font-medium text-white">
               {user.name.charAt(0)}
             </span>
           </div>
           <div className={`flex-1 min-w-0 ${sidebarOpen ? 'block' : 'hidden lg:block'}`}> {/* Conditionally hide on mobile when closed */}
-            <p className="text-sm font-medium text-foreground capitalize">{getRoleLabel(user.role)}</p> {/* Role on first line */}
-            <p className="text-xs text-muted-foreground truncate">{getUserDisplayName()}</p> {/* Name/Child's Name on second line */}
+            <p className="text-sm font-medium text-white capitalize">{getRoleLabel(user.role)}</p> {/* Role on first line */}
+            <p className="text-xs text-gray-300 truncate">{getUserDisplayName()}</p> {/* Name/Child's Name on second line */}
           </div>
         </div>
         <button
           onClick={logout}
           className={`
-            w-full flex items-center space-x-3 px-4 py-2 text-muted-foreground hover:bg-destructive hover:text-destructive-foreground rounded-lg transition-colors
+            w-full flex items-center space-x-3 px-4 py-2 text-gray-300 hover:bg-blue-500 hover:text-accent-red rounded-lg transition-colors
           `}
         >
           <LogOut className="w-4 h-4" />
