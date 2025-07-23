@@ -224,7 +224,7 @@ export default function UserManagement() {
           variant="accent-blue"
         >
           <Plus className="w-4 h-4" />
-          <span>Tambah Pengguna</span>
+          <span className="hidden sm:inline">Tambah Pengguna</span>
         </Button>
       </div>
 
