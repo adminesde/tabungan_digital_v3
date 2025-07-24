@@ -80,16 +80,18 @@ export function StudentsProvider({ children }: { children: ReactNode }) {
       return false;
     }
 
+    const studentToAdd = {
+      name: newStudentData.name,
+      class: newStudentData.class,
+      student_id: newStudentData.studentId,
+      parent_id: newStudentData.parentId,
+      balance: newStudentData.balance,
+      teacher_id: user.id, // Ensure teacher_id is explicitly set
+    };
+
     const { error } = await supabase
       .from('students')
-      .insert({
-        name: newStudentData.name,
-        class: newStudentData.class,
-        student_id: newStudentData.studentId,
-        parent_id: newStudentData.parentId,
-        balance: newStudentData.balance,
-        teacher_id: user.id, // Associate student with the currently logged-in teacher
-      });
+      .insert(studentToAdd);
 
     if (error) {
       console.error("Error adding student:", error);
