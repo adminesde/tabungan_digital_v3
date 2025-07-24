@@ -21,7 +21,7 @@ export default function StudentForm({ student, onSubmit, onClose }: StudentFormP
     name: student?.name || '',
     class: student?.class || (user?.role === 'teacher' ? user.class || '' : ''), // Pre-fill class for teacher
     studentId: student?.studentId || '', 
-    balance: student?.balance.toString() || '0',
+    balance: (student?.balance ?? 0).toString(),
   });
   const [formError, setFormError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false); // New state for submission loading
