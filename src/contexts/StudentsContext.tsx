@@ -103,12 +103,18 @@ export function StudentsProvider({ children }: { children: ReactNode }) {
   };
 
   const addMultipleStudents = async (newStudentsData: Omit<Student, 'id' | 'createdAt'>[]): Promise<boolean> => {
+    if (!user) {
+      showError("Anda harus login untuk menambahkan siswa.");
+      return false;
+    }
+
     const studentsToInsert = newStudentsData.map(data => ({
       name: data.name,
       class: data.class,
       student_id: data.studentId,
       parent_id: data.parentId,
       balance: data.balance,
+      teacher_id: user.id, // Associate students with the currently logged-in teacher
     }));
 
     console.log("StudentsContext: Attempting to insert multiple students:", studentsToInsert);
