@@ -88,7 +88,6 @@ export function StudentsProvider({ children }: { children: ReactNode }) {
         student_id: newStudentData.studentId,
         parent_id: newStudentData.parentId,
         balance: newStudentData.balance,
-        teacher_id: user.id, // Associate student with the currently logged-in teacher
       });
 
     if (error) {
